@@ -1,12 +1,12 @@
-const { Player } = require("../db.js");
-const { Op } = require("sequelize");
+import '../models/Player.js' // no se que carajos hacer para que funcioneeee
+import { Op } from "sequelize";
 
-async function getHallOfFame() {
+export const getHallOfFame = async function () {
   let betterPlayers = await Player.findAll({ order: ["ranking", "desc"], limit : 10});
-  return betterPlayers;
+  return "betterPlayers";
 }
 
-async function searchPlayers(data) {
+export const searchPlayers = async function (data) {
   let { page, text, status, order } = data;
   let conditions = { distinct: true, order: ["ranking", "desc"] };
 
@@ -34,13 +34,13 @@ async function searchPlayers(data) {
   return playersSearched;
 }
 
-async function createPlayer(data) {
+export const createPlayer = async function (data) {
   let { nickname, avatar } = data;
   await Player.create({ nickname, avatar });
   return `the player ${nickname} was created successfully`;
 }
 
-async function updatePlayer(data) {
+export const updatePlayer = async function (data) {
   let playerUpdated = await Player.update(data, { where: { id } });
   return `the player ${playerUpdated.dataValues.nickname} was updated successfully`;
 }
@@ -51,5 +51,3 @@ async function getPlayerById(id) {
   if (!playerById) return false;
   return playerById;
 }
-
-module.exports = { getHallOfFame, searchPlayers, createPlayer, updatePlayer };
