@@ -1,6 +1,5 @@
 import express from 'express';
-import morgan from 'morgan';
-import playersRoutes from '../src/routes/players.routes.js';
+import playersRoutes from './routes/players.routes.js';
 
 const app = express();
 

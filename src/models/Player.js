@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/db.js";
 
-export const Player = sequelize.define(
+const Player = sequelize.define(
   "player",
   {
     id: {
@@ -29,3 +29,5 @@ export const Player = sequelize.define(
   },
   { timestamps: false }
 );
+
+export default Player;
