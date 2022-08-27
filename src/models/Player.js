@@ -18,5 +18,5 @@ const Player = sequelize.define('player',{
         type:DataTypes.STRING
     }
 });
-
+//funciona
 export default Player
