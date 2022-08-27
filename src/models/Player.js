@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/db.js';
 
-export const Player = sequelize.define('player',{
+const Player = sequelize.define('player',{
     nickname:{
         type:DataTypes.STRING,
         allowNull: false,
@@ -18,3 +18,5 @@ export const Player = sequelize.define('player',{
         type:DataTypes.STRING
     }
 });
+
+export default Player
