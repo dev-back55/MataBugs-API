@@ -1,26 +1,26 @@
-import User from '../models/User.js';
 import { compareSync, hashSync } from 'bcrypt';
-import sign from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { secret, expires, rounds } from '../auth.js';
+import Player from './../models/Player.js';
 
 export async function signIn(req, res) {
     let { email, password } = req.body;
 
-    await User.findOne({
+    await Player.findOne({
         where: {
             email: email
         }
-    }).then(user => {
-        if (!user) {
+    }).then(player => {
+        if (!player) {
             res.status(404).json({ msg: "User with this email not found" });
         } else {
-            if (compareSync(password, user.password)) {
-                let token = sign({ user: user }, secret, {
+            if (compareSync(password, player.password)) {
+                let token = jwt.sign({ player: player }, secret, {
                     expiresIn: expires
                 });
 
                 res.json({
-                    user: user,
+                    player: player,
                     token: token
                 });
             } else {
@@ -36,22 +36,23 @@ export async function signUp(req, res) {
     let password = hashSync(req.body.password, Number.parseInt(rounds));
     //crear un usuario
     // Crear un usuario
-    let findUser = await User.findAll({
+    let findPlayer = await Player.findAll({
         where: {
             email: req.body.email
         }
     });
-    if (findUser.length === 0) {
-        await User.create({
-            name: req.body.name,
+    if (findPlayer.length === 0) {
+        await Player.create({
+            nickname: req.body.nickname,
             email: req.body.email,
+            avatar: req.body.avatar,
             password: password
-        }).then(user => {
-            let token = sign({ user: user }, secret, {
+        }).then(player => {
+            let token = jwt.sign({ player: player }, secret, {
                 expiresIn: expires
             });
             res.json({
-                user: user,
+                player: player,
                 token: token
             });
         }).catch(err => {
