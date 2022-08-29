@@ -6,6 +6,6 @@ const app = express();
 app.use(bodyParser.json());
 
 //routes
-app.use(playersRoutes)
+app.use('/player',playersRoutes)
 
 export default app;
