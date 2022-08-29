@@ -14,13 +14,12 @@ const Player = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("oro", "plata", "bronce"),
+      type:DataTypes.STRING,
+      dafaultValue:'bronce',
       allowNull: false,
-      dafaultValue: "bronce",
     },
     ranking: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 0,
     },
     avatar: {

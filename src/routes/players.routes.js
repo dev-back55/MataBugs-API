@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getHallOfFame, searchPlayers, createPlayer, updatePlayer} from '../controllers/players.controllers.js';
+import {getHallOfFame, searchPlayers, createPlayer, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.get("/search", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/createPlayer", async (req, res) => {
   try {
     let data = req.body;
     res.status(200).send(await createPlayer(data));
@@ -38,5 +38,14 @@ router.put("/:id", async (req, res) => {
     res.status(404).send(error);
   }
 });
+
+router.delete("/:id", async(req,res)=>{
+  try {
+    let{id}=req.params;
+    res.status(200).send(await deletePlayerById(id))
+  } catch (error) {
+    res.status(404).send(error.message)
+  }
+})
 
 export default router;
