@@ -1,22 +1,32 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '../database/db.js';
+import { DataTypes } from "sequelize";
+import { sequelize } from "../database/db.js";
 
-const Player = sequelize.define('player',{
-    nickname:{
-        type:DataTypes.STRING,
-        allowNull: false,
+const Player = sequelize.define(
+  "player",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    status:{
-        type:DataTypes.ENUM('oro','plata','bronce'),
-        allowNull:false,
-        dafaultValue:'bronce'
+    nickname: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    ranking:{
-        type:DataTypes.INTEGER
+    status: {
+      type:DataTypes.STRING,
+      dafaultValue:'bronce',
+      allowNull: false,
     },
-    avatar:{
-        type:DataTypes.STRING
-    }
-});
+    ranking: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    avatar: {
+      type: DataTypes.STRING,
+    },
+  },
+  { timestamps: false }
+);
 
-export default Player
+export default Player;
