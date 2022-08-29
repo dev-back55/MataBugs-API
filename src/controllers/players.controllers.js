@@ -1,23 +1,12 @@
-<<<<<<< HEAD
 import Op from "sequelize";
 import Player from "../models/Player.js"
 
 export async function getHallOfFame() {
-=======
-import '../models/Player.js' // no se que carajos hacer para que funcioneeee
-import { Op } from "sequelize";
-
-export const getHallOfFame = async function () {
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b
   let betterPlayers = await Player.findAll({ order: ["ranking", "desc"], limit : 10});
-  return "betterPlayers";
+  return betterPlayers;
 }
 
-<<<<<<< HEAD
 export async function searchPlayers(data) {
-=======
-export const searchPlayers = async function (data) {
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b
   let { page, text, status, order } = data;
   let conditions = { distinct: true, order: ["ranking", "desc"] };
 
@@ -45,21 +34,13 @@ export const searchPlayers = async function (data) {
   return playersSearched;
 }
 
-<<<<<<< HEAD
 export async function createPlayer(data) {
-=======
-export const createPlayer = async function (data) {
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b
   let { nickname, avatar } = data;
   await Player.create({ nickname, avatar });
   return `the player ${nickname} was created successfully`;
 }
 
-<<<<<<< HEAD
 export async function updatePlayer(data) {
-=======
-export const updatePlayer = async function (data) {
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b
   let playerUpdated = await Player.update(data, { where: { id } });
   return `the player ${playerUpdated.dataValues.nickname} was updated successfully`;
 }
@@ -70,12 +51,9 @@ export async function getPlayerById(id) {
   if (!playerById) return false;
   return playerById;
 }
-<<<<<<< HEAD
 
 export async function deletePlayerById(id){
     if (!/^[1-9][0-9]*$/.test(id)) return false;
     await Player.destroy({where:{id}})
     return `The player was eliminated`
 }
-=======
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b

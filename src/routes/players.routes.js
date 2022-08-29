@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { Router } from 'express';
 import { getHallOfFame, searchPlayers, createPlayer, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
-=======
-import { Router } from "express";
-import {getHallOfFame,searchPlayers,createPlayer,updatePlayer} from "../controllers/players.controllers.js";
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b
 
 const router = Router();
 
@@ -12,9 +7,6 @@ router.get("/hallOfFame", async (_, res) => {
   try {
     res.status(200).send(await getHallOfFame());
   } catch (error) {
-<<<<<<< HEAD
-    res.status(404).send(error.message);
-=======
     res.status(404).send(error);
   }
 });
@@ -44,7 +36,6 @@ router.put("/:id", async (req, res) => {
     res.status(200).send(await updatePlayer(id, data));
   } catch (error) {
     res.status(404).send(error);
->>>>>>> b42d2b56c71351b159f35cddfe7ceae07179fe7b
   }
 });
 
