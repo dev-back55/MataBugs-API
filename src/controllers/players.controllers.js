@@ -2,7 +2,7 @@ import { Op }  from "sequelize";
 import Player from "../models/Player.js"
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]]});
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10});
   return betterPlayers;
 }
 
@@ -20,9 +20,9 @@ export async function searchPlayers(data) {
 
   if (order){ order = order.split(","); conditions.order = [[order[0], order[1]]]}
   console.log("aca estoy")
-  if (["oro", "plata", "bronce"].includes(status) && text)conditions.where ={[Op.and]:[{status:{[Op.eq]:status},nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre1")
-  else if (text) conditions.where = {[Op.or]:[{status:{[Op.like]:`%${text}%`}},{nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre2")
-  else if (["oro", "plata", "bronce"].includes(status)) conditions.where = {status:status}, console.log("entre3")
+  if (["oro", "plata", "bronce"].includes(status) && text)conditions.where ={[Op.and]:[{status:{[Op.eq]:status},nickname:{[Op.like]:`%${text}%`}}]}
+  else if (text) conditions.where = {[Op.or]:[{status:{[Op.like]:`%${text}%`}},{nickname:{[Op.like]:`%${text}%`}}]}
+  else if (["oro", "plata", "bronce"].includes(status)) conditions.where = {status:status}
 
   
   let playersSearched = await Player.findAndCountAll(conditions)
@@ -36,13 +36,13 @@ export async function searchPlayers(data) {
 
 export const createPlayer= async function (data) {
   let { nickname, avatar } = data;
-  await Player.create({ nickname, avatar, status:"bronce" });
+  await Player.create({ nickname, avatar });
   return (`the player ${nickname} was created successfully`);
 }
 
-export async function updatePlayer(data) {
-  let playerUpdated = await Player.update(data, { where: { id } });
-  return `the player ${playerUpdated.dataValues.nickname} was updated successfully`;
+export async function updatePlayer(id, data) {
+  await Player.update(data, { where: { id } });
+  return `the player was updated successfully`;
 }
 
 export async function getPlayerById(id) {
