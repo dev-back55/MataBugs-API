@@ -18,8 +18,8 @@ export async function searchPlayers(data) {
   let playerById = await getPlayerById(text);
   if (playerById) return { players: playerById, totalPages: 1, results: 1 };
 
-  if (order) order = order.split(","); conditions.order = [[order[0], order[1]]]
-
+  if (order){ order = order.split(","); conditions.order = [[order[0], order[1]]]}
+  console.log("aca estoy")
   if (["oro", "plata", "bronce"].includes(status) && text)conditions.where ={[Op.and]:[{status:{[Op.eq]:status},nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre1")
   else if (text) conditions.where = {[Op.or]:[{status:{[Op.like]:`%${text}%`}},{nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre2")
   else if (["oro", "plata", "bronce"].includes(status)) conditions.where = {status:status}, console.log("entre3")
