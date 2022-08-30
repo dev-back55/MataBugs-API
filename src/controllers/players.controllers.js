@@ -1,5 +1,8 @@
 import { Op } from "sequelize";
 import Player from "../models/Player.js"
+import { compareSync, hashSync } from 'bcrypt';
+import { secret, expires, rounds } from '../auth.js';
+import jwt from 'jsonwebtoken';
 
 export async function getHallOfFame() {
   let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]] });
@@ -35,12 +38,15 @@ export async function searchPlayers(data) {
 
 export async function createPlayer(data) {
   let { nickname, email, avatar, password } = data;
+  console.log(password)
+  let hpassword = hashSync(password, Number.parseInt(rounds));
+  console.log(hpassword)
   const findInDb = await Player.findOne({ where: { email } })
   if (!findInDb) {
-    await Player.create({ nickname, email, avatar, password, status: "bronce" });
+    await Player.create({ nickname, email, avatar, password: hpassword, status: "bronce" });
     return `the player ${nickname} was created successfully`;
   } else {
-    return 'There is already a player with this email'
+    throw new Error ('There is already a player with this email')
   }
 }
 

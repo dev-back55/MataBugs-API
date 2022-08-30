@@ -26,7 +26,7 @@ router.post("/createPlayer", async (req, res) => {
     let data = req.body;
     res.status(200).send(await createPlayer(data));
   } catch (error) {
-    res.status(404).send(error);
+    res.status(404).send(error.message);
   }
 });
 
