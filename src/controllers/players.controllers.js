@@ -1,8 +1,8 @@
-import { Op }  from "sequelize";
+import { Op } from "sequelize";
 import Player from "../models/Player.js"
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]]});
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]] });
   return betterPlayers;
 }
 
@@ -18,13 +18,12 @@ export async function searchPlayers(data) {
   let playerById = await getPlayerById(text);
   if (playerById) return { players: playerById, totalPages: 1, results: 1 };
 
-  if (order){ order = order.split(","); conditions.order = [[order[0], order[1]]]}
+  if (order) { order = order.split(","); conditions.order = [[order[0], order[1]]] }
   console.log("aca estoy")
-  if (["oro", "plata", "bronce"].includes(status) && text)conditions.where ={[Op.and]:[{status:{[Op.eq]:status},nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre1")
-  else if (text) conditions.where = {[Op.or]:[{status:{[Op.like]:`%${text}%`}},{nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre2")
-  else if (["oro", "plata", "bronce"].includes(status)) conditions.where = {status:status}, console.log("entre3")
+  if (["oro", "plata", "bronce"].includes(status) && text) conditions.where = { [Op.and]: [{ status: { [Op.eq]: status }, nickname: { [Op.like]: `%${text}%` } }] }, console.log("entre1")
+  else if (text) conditions.where = { [Op.or]: [{ status: { [Op.like]: `%${text}%` } }, { nickname: { [Op.like]: `%${text}%` } }] }, console.log("entre2")
+  else if (["oro", "plata", "bronce"].includes(status)) conditions.where = { status: status }, console.log("entre3")
 
-  
   let playersSearched = await Player.findAndCountAll(conditions)
 
   return {
@@ -34,10 +33,15 @@ export async function searchPlayers(data) {
   }
 }
 
-export const createPlayer= async function (data) {
-  let { nickname, avatar } = data;
-  await Player.create({ nickname, avatar, status:"bronce" });
-  return (`the player ${nickname} was created successfully`);
+export async function createPlayer(data) {
+  let { nickname, email, avatar, password } = data;
+  const findInDb = await Player.findOne({ where: { email } })
+  if (!findInDb) {
+    await Player.create({ nickname, email, avatar, password, status: "bronce" });
+    return `the player ${nickname} was created successfully`;
+  } else {
+    return 'There is already a player with this email'
+  }
 }
 
 export async function updatePlayer(data) {
@@ -52,8 +56,8 @@ export async function getPlayerById(id) {
   return playerById;
 }
 
-export async function deletePlayerById(id){
-    if (!/^[1-9][0-9]*$/.test(id)) return false;
-    await Player.destroy({where:{id}})
-    return `The player was eliminated`
+export async function deletePlayerById(id) {
+  if (!/^[1-9][0-9]*$/.test(id)) return false;
+  await Player.destroy({ where: { id } })
+  return `The player was eliminated`
 }

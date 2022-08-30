@@ -6,7 +6,7 @@ import auth from '../middlewares/auth.js';
 
 const router = Router();
 
-router.get("/hallOfFame", auth, async (_, res) => {
+router.get("/hallOfFame", async (_, res) => {
   try {
     res.status(200).send(await getHallOfFame());
   } catch (error) {
