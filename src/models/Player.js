@@ -13,10 +13,28 @@ const Player = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    email: {
+        type: DataTypes.STRING,
+        unique: true,
+        validate: {
+            isEmail: {
+                msg: "The email must be a valid email"
+            }
+        }
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: {
+                args: [6, 255],
+                msg: "The password must have at least 6 characters"
+            }
+        }
+    },
     status: {
       type:DataTypes.STRING,
       dafaultValue:'bronce',
-      allowNull: false,
     },
     ranking: {
       type: DataTypes.INTEGER,
@@ -24,6 +42,15 @@ const Player = sequelize.define(
     },
     avatar: {
       type: DataTypes.STRING,
+    },
+    admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    //esto puse por si despues queremos aplicar algo similar al dashboar del PF
+    isactive: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
     },
   },
   { timestamps: false }
