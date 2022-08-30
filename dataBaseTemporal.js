@@ -22,7 +22,7 @@ function asignarStatus(numero) {
 function asignarRanking() {
   return Math.floor(Math.random() * 10000) + 1;
 }
-async function crearJugadores() {
+export async function crearJugadores() {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 12; j++) {
         let ranking = asignarRanking()
