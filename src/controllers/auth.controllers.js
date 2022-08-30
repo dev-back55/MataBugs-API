@@ -3,33 +3,28 @@ import jwt from 'jsonwebtoken';
 import { secret, expires, rounds } from '../auth.js';
 import Player from './../models/Player.js';
 
-export async function signIn(req, res) {
-    let { email, password } = req.body;
-
-    await Player.findOne({
+export async function signIn(email, password) {
+    let loginPlayer = await Player.findOne({
         where: {
             email: email
         }
-    }).then(player => {
-        if (!player) {
-            res.status(404).json({ msg: "User with this email not found" });
-        } else {
-            if (compareSync(password, player.password)) {
-                let token = jwt.sign({ player: player }, secret, {
-                    expiresIn: expires
-                });
+    })
+    if (!loginPlayer) {
+        throw new Error("Wrong password or email") 
+    } else {
+        if (compareSync(password, loginPlayer.password)) {
+            let token = jwt.sign({ player: loginPlayer }, secret, {
+                expiresIn: expires
+            });
 
-                res.json({
-                    player: player,
-                    token: token
-                });
-            } else {
-                res.status(401).json({ msg: "Incorrect password" });
-            }
+            return{
+                player: loginPlayer,
+                token: token
+            };
+        } else {
+            throw new Error("Wrong password or email")
         }
-    }).catch(err => {
-        res.status(500).json(err);
-    });
+    }
 }
 export async function signUp(nickname, email, avatar, password) {
     //encriptamos password
@@ -57,6 +52,6 @@ export async function signUp(nickname, email, avatar, password) {
             msg: 'player create successfully'
         };
     } else {
-        return 'There is already a player with this email'
+        throw new Error ('There is already a player with this email')
     }
 }
