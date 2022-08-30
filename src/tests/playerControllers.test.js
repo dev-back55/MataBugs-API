@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { signUp } from '../controllers/auth.controllers.js';
 import { sequelize } from '../database/db.js';
 import { createPlayer, deletePlayerById, getHallOfFame, getPlayerById, searchPlayers } from './../controllers/players.controllers.js';
-import { resetDB } from './auxfunctionstest.js';
 
 
 describe('--`signUp`--`getHallOfFame`--`getPlayerById`--`deletePlayerById`--', function () {
