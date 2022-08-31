@@ -1,8 +1,7 @@
 import { Op } from "sequelize";
 import Player from "../models/Player.js"
-import { compareSync, hashSync } from 'bcrypt';
-import { secret, expires, rounds } from '../auth.js';
-import jwt from 'jsonwebtoken';
+import { hashSync } from 'bcrypt';
+import { rounds } from '../auth.js';
 
 export async function getHallOfFame() {
   let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]] });
@@ -72,7 +71,7 @@ export async function updatePlayer(id,data) {
 
 export async function getPlayerById(id) {
   if (!/^[1-9][0-9]*$/.test(id)) return false;
-  let playerById = await Player.findByPk(id);
+  let playerById = await Player.findByPk(id,{attributes: { exclude: ['password'] }})
   if (!playerById) return false;
   return playerById;
 }
