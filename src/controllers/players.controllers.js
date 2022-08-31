@@ -50,9 +50,24 @@ export async function createPlayer(data) {
   }
 }
 
-export async function updatePlayer(data) {
-  let playerUpdated = await Player.update(data, { where: { id } });
-  return `the player ${playerUpdated.dataValues.nickname} was updated successfully`;
+export async function updatePlayer(id,data) {
+  let {idCard} = data
+  let findUserById = await getPlayerById(id)
+  if(findUserById.admin){
+    if(id==idCard){
+      await Player.update(data, { where: { id} })
+      return 'your profile has been successfully updated'
+    }else{
+      await Player.update(data, { where: { id:idCard } });
+      return `The player ${idCard} has been updated`
+    }
+  }else{
+    if(id==idCard){
+      await Player.update(data, { where: { id} })
+      return 'your profile has been successfully updated'
+    }
+    return `your user does not have admin rights`;
+  }
 }
 
 export async function getPlayerById(id) {
