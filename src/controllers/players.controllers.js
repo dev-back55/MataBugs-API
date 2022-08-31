@@ -37,13 +37,13 @@ export async function searchPlayers(data) {
 }
 
 export async function createPlayer(data) {
-  let { nickname, email, avatar, password } = data;
+  let { nickname, email, avatar, password, admin } = data;
   console.log(password)
   let hpassword = hashSync(password, Number.parseInt(rounds));
   console.log(hpassword)
   const findInDb = await Player.findOne({ where: { email } })
   if (!findInDb) {
-    await Player.create({ nickname, email, avatar, password: hpassword, status: "bronce" });
+    await Player.create({ nickname, email, avatar, password: hpassword, admin, status: "bronce" });
     return `the player ${nickname} was created successfully`;
   } else {
     throw new Error ('There is already a player with this email')
@@ -73,7 +73,6 @@ export async function updatePlayer(id,data) {
 export async function getPlayerById(id) {
   if (!/^[1-9][0-9]*$/.test(id)) return false;
   let playerById = await Player.findByPk(id,{attributes: { exclude: ['password'] }})
-    //  , --------- esto deberia ir en la linea de arriba (74), funciona OK pero rompe los test. Mañana les cuento.
   if (!playerById) return false;
   return playerById;
 }
