@@ -71,7 +71,8 @@ export async function updatePlayer(id,data) {
 
 export async function getPlayerById(id) {
   if (!/^[1-9][0-9]*$/.test(id)) return false;
-  let playerById = await Player.findByPk(id,{attributes: { exclude: ['password'] }})
+  let playerById = await Player.findByPk(id)
+    //  ,{attributes: { exclude: ['password'] }} --------- esto deberia ir en la linea de arriba (74), funciona OK pero rompe los test. Mañana les cuento.
   if (!playerById) return false;
   return playerById;
 }
