@@ -12,7 +12,8 @@ export async function signIn(email, password) {
     if (!loginPlayer) {
         throw new Error("Wrong password or email") 
     } else {
-        if (compareSync(password, loginPlayer.password)) {
+        console.log(loginPlayer)
+        if (compareSync(password, loginPlayer.dataValues.password)) {
             let token = jwt.sign({ player: loginPlayer }, secret, {
                 expiresIn: expires
             });
