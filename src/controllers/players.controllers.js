@@ -1,5 +1,7 @@
 import { Op } from "sequelize";
 import Player from "../models/Player.js"
+import { hashSync } from 'bcrypt';
+import { rounds } from '../auth.js';
 
 export async function getHallOfFame() {
   let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10});
@@ -34,20 +36,44 @@ export async function searchPlayers(data) {
   }
 }
 
-export const createPlayer= async function (data) {
-  let { nickname, avatar } = data;
-  await Player.create({ nickname, avatar, status:"bronce" });
-  return (`the player ${nickname} was created successfully`);
+export async function createPlayer(data) {
+  let { nickname, email, avatar, password } = data;
+  console.log(password)
+  let hpassword = hashSync(password, Number.parseInt(rounds));
+  console.log(hpassword)
+  const findInDb = await Player.findOne({ where: { email } })
+  if (!findInDb) {
+    await Player.create({ nickname, email, avatar, password: hpassword, status: "bronce" });
+    return `the player ${nickname} was created successfully`;
+  } else {
+    throw new Error ('There is already a player with this email')
+  }
 }
 
-export async function updatePlayer(id, data) {
-  await Player.update(data, { where: { id } });
-  return `the player was updated successfully`;
+export async function updatePlayer(id,data) {
+  let {idCard} = data
+  let findUserById = await getPlayerById(id)
+  if(findUserById.admin){
+    if(id==idCard){
+      await Player.update(data, { where: { id} })
+      return 'your profile has been successfully updated'
+    }else{
+      await Player.update(data, { where: { id:idCard } });
+      return `The player ${idCard} has been updated`
+    }
+  }else{
+    if(id==idCard){
+      await Player.update(data, { where: { id} })
+      return 'your profile has been successfully updated'
+    }
+    return `your user does not have admin rights`;
+  }
 }
 
 export async function getPlayerById(id) {
   if (!/^[1-9][0-9]*$/.test(id)) return false;
-  let playerById = await Player.findByPk(id);
+  let playerById = await Player.findByPk(id)
+    //  ,{attributes: { exclude: ['password'] }} --------- esto deberia ir en la linea de arriba (74), funciona OK pero rompe los test. Mañana les cuento.
   if (!playerById) return false;
   return playerById;
 }
