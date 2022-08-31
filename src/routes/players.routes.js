@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/hallOfFame", async (_, res) => {
   try {
-    res.status(200).send(await getHallOfFame());
+    res.status(200).json(await getHallOfFame());
   } catch (error) {
     res.status(404).send(error.message);
   }
