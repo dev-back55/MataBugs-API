@@ -4,19 +4,19 @@ import { hashSync } from 'bcrypt';
 import { rounds } from '../auth.js';
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10});
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10,attributes: { exclude: ['password','admin','isactive'] }});
   return betterPlayers;
 }
 
 export async function searchPlayers(data) {
   let { page, text, status, order } = data;
-  let conditions = { distinct: true, order: [["ranking", "desc"]] };
+  let conditions = { distinct: true, order: [["ranking", "desc"]],attributes: { exclude: ['password','admin','isactive'] }};
 
   let size = 10;
   page = page > 1 ? Number.parseInt(page) - 1 : 0;
   conditions.limit = size;
   conditions.offset = page * size;
-
+  // sin admins ni baneados
   let playerById = await getPlayerById(text);
   if (playerById) return { players: playerById, totalPages: 1, results: 1 };
 
@@ -72,8 +72,8 @@ export async function updatePlayer(id,data) {
 
 export async function getPlayerById(id) {
   if (!/^[1-9][0-9]*$/.test(id)) return false;
-  let playerById = await Player.findByPk(id)
-    //  ,{attributes: { exclude: ['password'] }} --------- esto deberia ir en la linea de arriba (74), funciona OK pero rompe los test. Mañana les cuento.
+  let playerById = await Player.findByPk(id,{attributes: { exclude: ['password'] }})
+    //  , --------- esto deberia ir en la linea de arriba (74), funciona OK pero rompe los test. Mañana les cuento.
   if (!playerById) return false;
   return playerById;
 }
