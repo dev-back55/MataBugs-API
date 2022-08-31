@@ -4,7 +4,7 @@ import { hashSync } from 'bcrypt';
 import { rounds } from '../auth.js';
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]] });
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10});
   return betterPlayers;
 }
 
@@ -22,10 +22,11 @@ export async function searchPlayers(data) {
 
   if (order) { order = order.split(","); conditions.order = [[order[0], order[1]]] }
   console.log("aca estoy")
-  if (["oro", "plata", "bronce"].includes(status) && text) conditions.where = { [Op.and]: [{ status: { [Op.eq]: status }, nickname: { [Op.like]: `%${text}%` } }] }, console.log("entre1")
-  else if (text) conditions.where = { [Op.or]: [{ status: { [Op.like]: `%${text}%` } }, { nickname: { [Op.like]: `%${text}%` } }] }, console.log("entre2")
-  else if (["oro", "plata", "bronce"].includes(status)) conditions.where = { status: status }, console.log("entre3")
+  if (["oro", "plata", "bronce"].includes(status) && text)conditions.where ={[Op.and]:[{status:{[Op.eq]:status},nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre1")
+  else if (text) conditions.where = {[Op.or]:[{status:{[Op.like]:`%${text}%`}},{nickname:{[Op.like]:`%${text}%`}}]}, console.log("entre2")
+  else if (["oro", "plata", "bronce"].includes(status)) conditions.where = {status:status}, console.log("entre3")
 
+  
   let playersSearched = await Player.findAndCountAll(conditions)
 
   return {
