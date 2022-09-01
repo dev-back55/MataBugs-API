@@ -3,7 +3,6 @@ import { faker } from '@faker-js/faker';
 import multiavatar from '@multiavatar/multiavatar/esm'
 import { rounds } from './src/auth.js';
 import { hashSync } from 'bcrypt';
-import{ avatares }from './avatares.js'
 
 const users = ["lucas", "horacio", "enzo", "gabriel", "federico", "agustin", "matias", "pedro", "juan cruz", "eduardo", "diego", "lionel"];
 
@@ -20,7 +19,7 @@ const avatars = ["https://drive.google.com/thumbnail?id=1FvgHhPmYNwruvKSjok1dp-i
 "https://drive.google.com/thumbnail?id=1ZhFz6JMOtT3107w-z2KuO0PZMOKEzIYx",
 "https://drive.google.com/thumbnail?id=1gqJ8yhqsmyQ5sJcLIFGt-DmN_5mDyBu-"]
 
-export const avatares = [
+const avatares = [
     "https://cdn-icons-png.flaticon.com/512/4825/4825015.png",
     "https://cdn-icons-png.flaticon.com/256/4825/4825112.png",
     "https://cdn-icons-png.flaticon.com/256/4825/4825038.png",
@@ -81,9 +80,8 @@ export async function crearJugadores() {
   }
 }
 
-let cantidadDeUsuarios = 50
+let cantidadDeUsuarios = 5
 export async function crearJugadoresParaDb() {
-  let players = []
   for (let j = 0; j < cantidadDeUsuarios; j++) {
       let ranking = asignarRanking()
       let status = asignarStatus(ranking)
@@ -92,9 +90,8 @@ export async function crearJugadoresParaDb() {
       let passwordWithoutHash = faker.internet.password()
       let password = hashSync(passwordWithoutHash, Number.parseInt(rounds));
       let avatar = avatares[Math.floor(Math.random() * avatares.length)];
-      players.push({ nickname ,ranking, status, avatar, email, password })
+      await Player.create({ nickname ,ranking, status, avatar, email, password })
   }
-  await Player.bulkCreate(players)
   console.log("sobreviví")
 }
 

@@ -22,7 +22,7 @@ export async function signIn(email, password) {
                 token: token
             };
         } else {
-            throw new Error("Wrong password or email")
+            throw new Error("wrong password or email")
         }
     }
 }
@@ -41,7 +41,8 @@ export async function signUp(nickname, email, avatar, password) {
             nickname: nickname,
             email: email,
             avatar: avatar,
-            password: hpassword
+            password: hpassword,
+            status: "bronce"
         })
         let token = jwt.sign({ player: player }, secret, {
             expiresIn: expires
@@ -52,6 +53,6 @@ export async function signUp(nickname, email, avatar, password) {
             msg: 'player create successfully'
         };
     } else {
-        throw new Error ('There is already a player with this email')
+        return 'There is already a player with this email'
     }
 }
