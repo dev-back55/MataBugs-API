@@ -11,7 +11,7 @@ app.use(morgan('dev'))
 
 //routes
 
-app.use('/player',playersRoutes)
+app.use(playersRoutes)
 
 // app.use(playersRoutes)
 app.use(authRoutes)
