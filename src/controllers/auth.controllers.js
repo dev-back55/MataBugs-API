@@ -42,7 +42,8 @@ export async function signUp(nickname, email, avatar, password) {
             nickname: nickname,
             email: email,
             avatar: avatar,
-            password: hpassword
+            password: hpassword,
+            status: "bronce"
         })
         let token = jwt.sign({ player: player }, secret, {
             expiresIn: expires

@@ -52,4 +52,8 @@ describe('-`signUp`-`getHallOfFame`-`getPlayerById`-`deletePlayerById`-`createPl
         const player2 = await getPlayerById(2)
         expect(player2.dataValues).to.eql({"admin": false, "avatar": "otro avatar por defecto", "email": "lucas@gmail.com", "id": 2, "isactive": false, "nickname": "lucasB", "password":player2.password, "ranking": 0, "status": "bronce"})
     })
-})
+    afterAll(async () => {
+       await sequelize.close();
+    });
+});
+
