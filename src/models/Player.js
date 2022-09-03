@@ -42,8 +42,7 @@ const Player = sequelize.define(
     },
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: "https://static1.abc.es/media/play/2020/09/29/avatar-kE4H--620x349@abc.jpeg",
-
+      defaultValue: "https://drive.google.com/thumbnail?id=1FvgHhPmYNwruvKSjok1dp-ikpKVD2O5z"
     },
     admin: {
         type: DataTypes.BOOLEAN,
