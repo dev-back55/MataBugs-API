@@ -42,10 +42,12 @@ const Player = sequelize.define(
     },
     avatar: {
       type: DataTypes.STRING,
+      defaultValue: "https://static1.abc.es/media/play/2020/09/29/avatar-kE4H--620x349@abc.jpeg",
+
     },
     admin: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
     },
     //esto puse por si despues queremos aplicar algo similar al dashboar del PF
     isactive: {

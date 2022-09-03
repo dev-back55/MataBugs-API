@@ -23,4 +23,13 @@ router.post('/signup',async (req,res)=>{
     }
 });
 
+router.get("/logout", (req, res) => {
+    if (req.logout) req.logout();
+    res.status(201).json({
+      success: true
+    })
+  });
+
 export default router
+
+

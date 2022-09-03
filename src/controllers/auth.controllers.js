@@ -27,6 +27,8 @@ export async function signIn(email, password) {
         }
     }
 }
+
+
 export async function signUp(nickname, email, avatar, password) {
     //encriptamos password
     let hpassword = hashSync(password, Number.parseInt(rounds));
