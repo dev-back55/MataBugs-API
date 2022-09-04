@@ -1,7 +1,7 @@
 import app from './app.js';
 import { sequelize } from './database/db.js'
 import './models/Player.js'
-// for first commit
+// for add github actions commit
 //setting
 const PORT = process.env.PORT || 3000;
 
