@@ -4,8 +4,6 @@ import './models/Player.js'
 
 // for add github actions commit
 
-// for second commit
-
 //setting
 const PORT = process.env.PORT || 3000;
 
