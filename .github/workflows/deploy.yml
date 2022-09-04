@@ -4,7 +4,7 @@ on:
     branches: [ deploy-test ]
 jobs:       
   deploy:
-    runs-on: Linux/UNIX
+    runs-on: ubuntu-latest
     steps:
       # Step 1
     - name: Checkout to repo
