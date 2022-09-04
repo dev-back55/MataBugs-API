@@ -1,7 +1,7 @@
 name: CI/CD Pipeline
 on:
   push:
-    branches: [ main ]
+    branches: [ deploy-test ]
 jobs:       
   deploy:
     runs-on: linux
