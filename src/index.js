@@ -3,12 +3,12 @@ import { sequelize } from './database/db.js'
 import './models/Player.js'
 
 //setting
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 //Iniciamos Server
 async function main() {
     try {
-        await sequelize.sync({ force: true })
+        await sequelize.sync({ force: false })
         app.listen(PORT, () => {
             console.log(`Server on port http://localhost:${PORT}`)
         })
