@@ -3,20 +3,21 @@ import { recoverPassword, updatePassword } from '../controllers/password.control
 const router = Router();
 
 router.post('/password', async(req,res)=>{
-    try{
+    try {
         let { email  } = req.body
         res.json(await recoverPassword(email))
-    }catch(error){
-        res.json(error.message)
+    } catch(error){
+        res.status(400).json(error.message)
     }
 })
 
 router.put('/password', async(req,res)=>{
-    try{
+    try {
         let { password, token } = req.body
         res.json(await updatePassword(password, token))
-    }catch(error){
-        res.json(error.message)
+    } catch(error){
+        res.status(400).json(error.message)
     }
 })
+
 export default router;

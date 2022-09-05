@@ -2,6 +2,7 @@ import { Router } from 'express';
 const router = Router();
 // Controllers
 import { signIn, signUp } from '../controllers/auth.controllers.js';
+import auth from '../middlewares/auth.js';
 
 router.post('/login', async(req,res)=>{
     try {
@@ -16,6 +17,16 @@ router.post('/signup',async (req,res)=>{
     try {
         let {nickname, email, avatar, password} = req.body
         res.json(await signUp(nickname, email, avatar, password))
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+});
+
+router.post('/reload', auth, async (req,res) =>{
+    try {
+        let { id } = req.body;
+        if (req.player && req.player.id === id) res.json(req.player);
+        else throw new Error("INVALID USER ID");
     } catch (error) {
         res.status(500).json(error.message);
     }
