@@ -1,7 +1,10 @@
 import Sequelize from "sequelize";
-import {username, password, host} from '../config/config.js'
+import dotenv from "dotenv";
 
-export const sequelize = new Sequelize('halloffame', `${username}`, `${password}`, {
-    host: `${host}`,
+dotenv.config()
+const {DB_USER, DB_PASSWORD, DB_HOST} = process.env;
+
+export const sequelize = new Sequelize('halloffame', `${DB_USER}`, `${DB_PASSWORD}`, {
+    host: `${DB_HOST}`,
     dialect: 'postgres'
 })
