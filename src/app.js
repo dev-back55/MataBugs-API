@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import playersRoutes from './routes/players.routes.js';
 import authRoutes from './routes/auth.routes.js';
-import aboutRoutes from './routes/about.routes.js';
 import passwordRoutes from './routes/password.routes.js'
 import morgan from 'morgan';
 import dotenv from "dotenv";
@@ -27,7 +26,6 @@ app.use((req, res, next) => {
 //routes
 app.use(playersRoutes)
 app.use(authRoutes)
-app.use(aboutRoutes)
 app.use(passwordRoutes)
 
 
