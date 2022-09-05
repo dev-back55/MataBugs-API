@@ -32,7 +32,7 @@ router.post("/createPlayer", auth, async (req, res) => {
   }
 });
 
-router.put("/player/:id", auth, async (req, res) => {
+router.put("/player", auth, async (req, res) => {
   try {
     let data = req.body;
     let id = req.player.id
