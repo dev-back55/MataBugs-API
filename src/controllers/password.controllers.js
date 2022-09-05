@@ -29,8 +29,7 @@ export async function recoverPassword(email){
     catch(error) {
         console.log(error)
     }
-    return {msg:"We have sent an email to your mailbox so that you can update your password",
-            token: token}
+    return "We have sent an email to your mailbox so that you can update your password"
 }
 
 export async function updatePassword(password, token){

@@ -46,13 +46,13 @@ export async function searchPlayers(data) {
 }
 
 export async function createPlayer(data) {
-  let { nickname, email, avatar, password } = data;
+  let { nickname, email, avatar, password, admin } = data;
 
   const findInDb = await Player.findOne({ where: { email } })
-  if (!findInDb) throw new Error ('There is already a player with this email')
+  if (findInDb) throw new Error ('There is already a player with this email')
 
   let hpassword = hashSync(password, Number.parseInt(rounds));
-  await Player.create({ nickname, email, avatar, password: hpassword, status: "bronce" });
+  await Player.create({ nickname, email, avatar, admin, password: hpassword, status: "bronce" });
   
   return `the player ${nickname} was created successfully`;
 
