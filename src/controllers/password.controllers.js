@@ -11,10 +11,10 @@ const { CLIENT_URL } = process.env;
 sgMail.setApiKey(API_KEY)
 
 export async function recoverPassword(email){
-    let userInDb = await Player.findOne({where:{email}})
-    if(!userInDb)throw new Error("that user does not exist");
+    let playerInDb = await Player.findOne({where:{email}})
+    if(!playerInDb)throw new Error("that user does not exist");
 
-    let token = jwt.sign({ user: userInDb }, secret, {expiresIn: expires});
+    let token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
    
     try {
         const msg = {
@@ -34,18 +34,19 @@ export async function recoverPassword(email){
 }
 
 export async function updatePassword(password, token){
+    if(!password) throw new Error("you must send a password");
     if(!(5 < password.length)) throw new Error("the password must have more than 5 characters");
     if(!(password.length < 256)) throw new Error("the password is too long");
 
-    let userInDb;
-
+    let playerInDb;
+    
     jwt.verify(token, secret, (error, decoded) => {
         if(error) throw new Error('That user does not exist')
-        userInDb = decoded.user
+        playerInDb = decoded.player
     })
 
     password = hashSync(password, Number.parseInt(rounds));
-    await User.update({password},{where:{id : userInDb.id}})
+    await Player.update({password},{where:{id : playerInDb.id}})
 
     return ("the password has been updated successfully")
 }
