@@ -37,6 +37,13 @@ export async function signIn(email, password) {
             }
         }
     }
+//   let loginPlayer = await Player.findOne({where:{email}})
+//   if (!loginPlayer) throw new Error("Wrong password or email") 
+//   if (!compareSync(password, loginPlayer.password)) throw new Error("wrong password or email")
+  
+//   let token = jwt.sign({ player: loginPlayer }, secret, {expiresIn: expires});
+
+//   return{player: loginPlayer,token};
 }
 
 
@@ -82,4 +89,14 @@ export async function signUp(nickname, email, avatar, password) {
     } else {
         return 'There is already a player with this email'
     }
+
+//   let findPlayer = await Player.findAll({where:{email}});
+//   if (findPlayer.length != 0) return ('There is already a player with this email')
+
+//   let hpassword = hashSync(password, Number.parseInt(rounds))
+//   let playerCreated = await Player.create({nickname, email, avatar, password:hpassword, status:"bronce"})
+//   let token = jwt.sign({ player: playerCreated }, secret, {expiresIn: expires});
+
+//   return {player: playerCreated, token: token, msg: 'player create successfully'} 
+
 }
