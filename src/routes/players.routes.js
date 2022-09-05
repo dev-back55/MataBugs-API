@@ -32,7 +32,7 @@ router.post("/createPlayer", auth, async (req, res) => {
   }
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/player/:id", auth, async (req, res) => {
   try {
     let { id } = req.params;
     let data = req.body;
@@ -42,7 +42,7 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-router.delete("/:id", auth,async(req,res)=>{
+router.delete("/player/:id", auth,async(req,res)=>{
   try {
     let{id}=req.params;
     res.status(200).json(await deletePlayerById(id))

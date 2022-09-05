@@ -11,42 +11,42 @@ const { CLIENT_URL } = process.env;
 sgMail.setApiKey(API_KEY)
 
 export async function recoverPassword(email){
-    let userInDb = await Player.findOne({where:{email}})
-    if(!userInDb)throw new Error("that user does not exist");
+    let playerInDb = await Player.findOne({where:{email}})
+    if(!playerInDb)throw new Error("that user does not exist");
 
-    let token = jwt.sign({ player: userInDb }, secret, {expiresIn: expires});
+    let token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
    
-    // try {
-    //     const msg = {
-    //         to: email,
-    //         from: "losmatabugs@gmail.com",
-    //         subject:"Recover Password",
-    //         text:"This email was requested to change your password, please do not share with anyone, if you have not requested it, you do not need to do anything",
-    //         html:`<a href=${CLIENT_URL}/updatepassword/?token=${token}>Restore your password</a>`
-    //     }
-    //     await sgMail.send(msg);
-    // }
-    // catch(error) {
-    //     console.log(error)
-    // }
-
+    try {
+        const msg = {
+            to: email,
+            from: "losmatabugs@gmail.com",
+            subject:"Recover Password",
+            text:"This email was requested to change your password, please do not share with anyone, if you have not requested it, you do not need to do anything",
+            html:`<a href=${CLIENT_URL}/updatepassword/?token=${token}>Restore your password</a>`
+        }
+        await sgMail.send(msg);
+    }
+    catch(error) {
+        console.log(error)
+    }
     return {msg:"We have sent an email to your mailbox so that you can update your password",
             token: token}
 }
 
 export async function updatePassword(password, token){
+    if(!password) throw new Error("you must send a password");
     if(!(5 < password.length)) throw new Error("the password must have more than 5 characters");
     if(!(password.length < 256)) throw new Error("the password is too long");
 
-    let userInDb;
-
+    let playerInDb;
+    
     jwt.verify(token, secret, (error, decoded) => {
         if(error) throw new Error('That user does not exist')
-        userInDb = decoded.user
+        playerInDb = decoded.player
     })
 
     password = hashSync(password, Number.parseInt(rounds));
-    await Player.update({password},{where:{id : userInDb.id}})
+    await Player.update({password},{where:{id : playerInDb.id}})
 
     return ("the password has been updated successfully")
 }
