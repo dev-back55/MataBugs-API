@@ -1,6 +1,8 @@
 import { Router } from "express";
+
 import {getHallOfFame, searchPlayers, createPlayer, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
 import auth from '../middlewares/auth.js';
+
 
 const router = Router();
 

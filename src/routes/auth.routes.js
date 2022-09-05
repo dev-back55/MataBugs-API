@@ -1,9 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-// Middlewares
-import auth from '../middlewares/auth.js';
 // Controllers
 import { signIn, signUp } from '../controllers/auth.controllers.js';
+import auth from '../middlewares/auth.js';
 
 router.post('/login', async(req,res)=>{
     try {
@@ -23,4 +22,23 @@ router.post('/signup',async (req,res)=>{
     }
 });
 
+router.post('/reload', auth, async (req,res) =>{
+    try {
+        let { id } = req.body;
+        if (req.player && req.player.id === id) res.json(req.player);
+        else throw new Error("INVALID USER ID");
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+});
+
+router.get("/logout", (req, res) => {
+    if (req.logout) req.logout();
+    res.status(201).json({
+      success: true
+    })
+  });
+
 export default router
+
+
