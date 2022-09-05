@@ -32,10 +32,10 @@ router.post("/createPlayer", auth, async (req, res) => {
   }
 });
 
-router.put("/player/:id", auth, async (req, res) => {
+router.put("/player", auth, async (req, res) => {
   try {
-    let { id } = req.params;
     let data = req.body;
+    let id = req.player.id
     res.status(200).json(await updatePlayer(id, data));
   } catch (error) {
     res.status(404).send(error.message);
