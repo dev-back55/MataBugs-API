@@ -26,4 +26,5 @@ cd /home/ec2-user/app/MataBugs-API >> /home/ec2-user/app/MataBugs-API/deploy.log
 echo 'npm install' >> /home/ec2-user/app/MataBugs-API/deploy.log 
 npm install >> /home/ec2-user/app/MataBugs-API/deploy.log
 echo 'copy example to env' >> /home/ec2-user/app/MataBugs-API/deploy.log
+sudo rm .env >> /home/ec2-user/app/MataBugs-API/deploy.log
 sudo cp .env.example .env >> /home/ec2-user/app/MataBugs-API/deploy.log
