@@ -2,7 +2,7 @@ import request from "supertest";
 import { expect } from 'chai';
 import { sequelize } from '../database/db.js';
 import app from '../app.js';
-import { createPlayer } from "./../controllers/players.controllers.js";
+import { createPlayer } from "../controllers/players.controllers.js";
 
 describe('Routes:--`hallOfFame`--', function () {
     beforeEach(async function () {
