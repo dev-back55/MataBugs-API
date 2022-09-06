@@ -46,9 +46,8 @@ const Player = sequelize.define(
     },
     admin: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
+        defaultValue: false,
     },
-    //esto puse por si despues queremos aplicar algo similar al dashboar del PF
     isactive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
