@@ -2,7 +2,7 @@ import request from "supertest";
 import { expect } from 'chai';
 import { sequelize } from '../database/db.js';
 import app from '../app.js';
-import { createPlayer } from "./../controllers/players.controllers.js";
+import { createPlayer } from "../controllers/players.controllers.js";
 
 describe('Routes:--`Signup`--', function () {
     let token;
@@ -28,14 +28,14 @@ describe('Routes:--`Signup`--', function () {
     })
     it('DELETE admin elimina a horacio(id:2), responde con un mensaje de confirmación y su status correspondiente', async function () {
         const response = await request(app)
-            .delete('/2')
+            .delete('/player/2')
             .set('Authorization', 'Bearer ' + token)
         expect(response.status).to.eql(200);
         expect(response.body).to.eql(`The player was eliminated`)
     })
     it('PUT admin edita a lucas(id:3) y lo banea, responde con un mensaje de confirmación y su status correspondiente', async function () {
         const response = await request(app)
-            .put('/1')
+            .put('/player')
             .set('Authorization', 'Bearer ' + token)
             .send({ 'nickname': 'lucasB', 'avatar': 'otro avatar', 'isactive':false, 'idCard': 3 })
         expect(response.status).to.eql(200);
@@ -50,7 +50,7 @@ describe('Routes:--`Signup`--', function () {
     })
     it('PUT el jugador logueado edita su nickname y su avatar, responde con un mensaje de confirmación', async function () {
         const response = await request(app)
-            .put('/4')
+            .put('/player')
             .set('Authorization', 'Bearer ' + token)
             .send({ 'nickname': 'fedeRomero', 'avatar': 'otro avatar', 'idCard': 4 })
         expect(response.status).to.eql(200);
@@ -65,7 +65,7 @@ describe('Routes:--`Signup`--', function () {
     })
     it('PUT el jugador registrado edita su nickname y su avatar, responde con un mensaje de confirmación', async function () {
         const response = await request(app)
-            .put('/5')
+            .put('/player')
             .set('Authorization', 'Bearer ' + token)
             .send({ 'nickname': 'gabip', 'avatar': 'otro avatar', 'idCard': 5})
         expect(response.status).to.eql(200);
