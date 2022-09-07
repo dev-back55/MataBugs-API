@@ -1,12 +1,13 @@
 import { Router } from "express";
-import cors from "cors";
+//import cors from "cors";
 import {getHallOfFame, searchPlayers, createPlayer, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
 import auth from '../middlewares/auth.js';
 
 
 const router = Router();
-const whitelist = ['http://15.229.74.105:3000']
-const corsOptions = {
+/*
+var whitelist = ['http://localhost:3000']
+var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
@@ -15,8 +16,9 @@ const corsOptions = {
     }
   }
 }
+*/
 
-router.get("/hallOfFame", cors(corsOptions), async (_, res) => {
+router.get("/hallOfFame", async (_, res) => {
   try {
     res.status(200).json(await getHallOfFame());
   } catch (error) {
@@ -24,7 +26,7 @@ router.get("/hallOfFame", cors(corsOptions), async (_, res) => {
   }
 });
 
-router.get("/search", cors(corsOptions), async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
     let data = req.query;
     res.status(200).json(await searchPlayers(data));
