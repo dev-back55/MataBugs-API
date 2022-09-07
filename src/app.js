@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 dotenv.config()
 
 const { CLIENT_URL } = process.env;
+console.log(CLIENT_URL, 'CLIENT URL');
 
 const app = express();
 app.use(bodyParser.json());
