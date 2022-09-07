@@ -4,7 +4,7 @@ import { sequelize } from '../database/db.js';
 import app from '../app.js';
 import { createPlayer } from "../controllers/players.controllers.js";
 
-describe('Routes:--`Signup`--', function () {
+describe('Routes:--`signup`--`createPlayer`--`login`--`player`--', function () {
     let token;
     //En este test estamos Hardcodeando un admin en la DB...
     it('POST login admin, obtenemos el token', async function () {
@@ -72,6 +72,7 @@ describe('Routes:--`Signup`--', function () {
         expect(response.body).to.eql('your profile has been successfully updated')
     })
     afterAll(async () => {
+        await sequelize.sync({ force: true })
         await sequelize.close();
     });
 })
