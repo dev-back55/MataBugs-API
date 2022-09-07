@@ -27,7 +27,7 @@ export async function updatePlayer(id,data) {
   let userById = await getPlayerById(id)
 
   if(!userById.admin && id != idCard) throw new Error ('you do not have the permissions to perform this action')
-  if(id == idCard) {let {avatar, nickname} = data; data = {avatar, nickname}}
+  if(!userById.admin) {let {avatar, nickname} = data; data = {avatar, nickname}}
   await Player.update(data, { where: { id:idCard } })
 
   return id==idCard ? ('your profile has been successfully updated') :
@@ -52,6 +52,7 @@ export async function deletePlayerById(id) {
 }
 
 export async function searchPlayers(data) {
+  if(!data) data = { page : 1}
   let { page, text, status, order } = data;
 
   let playerById = await getPlayerById(text);
@@ -62,10 +63,10 @@ export async function searchPlayers(data) {
   
   if(itIsAInvalidStatus(status)) status = null
   let queryParameters = setQueryParameters(size, page, order, status, text)
-  
-  let playersSearched = await Player.findAndCountAll(queryParameters)
 
-  return {
+  let playersSearched = await Player.findAndCountAll(queryParameters)
+  
+return {
     players: playersSearched.rows,
     totalPages: Math.ceil(playersSearched.count / size),
     results: playersSearched.count,
@@ -76,7 +77,7 @@ function setQueryParameters(size, page, order, status, text){
   if(order) {let auxOrder = order.split(","); order = [[auxOrder[0], auxOrder[1]]]}
   else order  = [['ranking','desc']]
 
-  return {distinct:true, offset : page * size, order, limit: size,
+  return {raw: true,distinct:true, offset : page * size, order, limit: size,
   attributes:{exclude:['password','admin','isactive']}, where : setFilters(status, text)}
 }
 

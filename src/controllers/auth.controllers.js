@@ -14,6 +14,8 @@ sgMail.setApiKey(API_KEY)
 
 export async function signIn(email, password) {
   let loginPlayer = await Player.findOne({where:{email}})
+  if(!loginPlayer.isactive) throw new Error("the player is banned") 
+
   if (!loginPlayer) throw new Error("Wrong password or email") 
   if (!compareSync(password, loginPlayer.password)) throw new Error("wrong password or email")
   
