@@ -45,3 +45,9 @@ export async function signUp(nickname, email, avatar, password) {
 
   return {player: playerCreated, token: token, msg: 'player create successfully'} 
 }
+
+export function refreshPlayer(id, player) {
+  if (!player || player.id !== id) throw new Error("INVALID USER ID");
+  if (!player.isactive) throw new Error("BANNED");
+  else return player;
+}
