@@ -80,7 +80,7 @@ export async function crearJugadores() {
   }
 }
 
-let cantidadDeUsuarios = 200;
+let cantidadDeUsuarios = 50;
 export async function crearJugadoresParaDb() {
   for (let j = 0; j < cantidadDeUsuarios; j++) {
       let ranking = asignarRanking()
