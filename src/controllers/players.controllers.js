@@ -27,7 +27,7 @@ export async function updatePlayer(id,data) {
   let userById = await getPlayerById(id)
 
   if(!userById.admin && id != idCard) throw new Error ('you do not have the permissions to perform this action')
-  if(id == idCard) {let {avatar, nickname} = data; data = {avatar, nickname}}
+  if(!userById.admin) {let {avatar, nickname} = data; data = {avatar, nickname}}
   await Player.update(data, { where: { id:idCard } })
 
   return id==idCard ? ('your profile has been successfully updated') :
