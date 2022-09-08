@@ -162,7 +162,6 @@ export function crearJugadoresParaDb() {
     let passwordcrypt = hashSync(users[i].password, Number.parseInt(rounds));
     // Crear un usuario
     Player.create({
-      id: users[i].id,
       nickname: users[i].nickname,
       email: users[i].email,
       password: passwordcrypt,
@@ -173,7 +172,7 @@ export function crearJugadoresParaDb() {
       isactive: users[i].isactive,
     });
     console.log(
-      `Usuario: ${users[i].name} - PASS:${users[i].password} CREADO...`
+      `Usuario: ${users[i].nickname} - PASS:${users[i].password} CREADO...`
     );
   }
   console.log("USUARIOS CREADOS");

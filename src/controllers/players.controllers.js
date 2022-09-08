@@ -2,24 +2,12 @@ import { Op } from "sequelize";
 import Player from "../models/Player.js"
 import { hashSync } from 'bcrypt';
 import { rounds } from '../auth.js';
+import { avatareimg } from "./auth.controllers.js";
 
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10, where: {admin: false}, attributes: { exclude: ['password','admin','isactive'] }});
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10, where: {isactive: true, admin: false}, attributes: { exclude: ['password','admin','isactive'] }});
   return betterPlayers;
-}
-
-export async function createPlayer(data) {
-  let { nickname, email, avatar, password, admin } = data;
-
-  const findInDb = await Player.findOne({ where: { email } })
-  if (findInDb) throw new Error ('There is already a player with this email')
-
-  let hpassword = hashSync(password, Number.parseInt(rounds));
-  await Player.create({ nickname, email, avatar, admin, password: hpassword, status: "bronce" });
-  
-  return `the player ${nickname} was created successfully`;
-
 }
 
 export async function updatePlayer(id,data) {

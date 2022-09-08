@@ -15,11 +15,10 @@ router.post('/password', async(req,res)=>{
 router.put('/password', async(req,res)=>{
     try {
         let { password, token } = req.body
-        console.log(password, token)
 
         res.json(await updatePassword(password, token))
     } catch(error){
-        console.log(error)
+
         res.status(400).json(error.message)
     }
 })

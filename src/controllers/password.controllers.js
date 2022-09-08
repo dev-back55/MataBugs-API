@@ -1,15 +1,10 @@
 import { secret, expires, rounds } from '../auth.js';
 import { hashSync, compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import sgMail from '@sendgrid/mail';
 import Player from './../models/Player.js';
 import dotenv from "dotenv";
 
 dotenv.config()
-const API_KEY = process.env.SENDGRID_API_KEY
-const { CLIENT_URL } = process.env;
-
-sgMail.setApiKey(API_KEY)
 
 export async function recoverPassword(email){
     let playerInDb = await Player.findOne({where:{email}})
@@ -17,19 +12,6 @@ export async function recoverPassword(email){
 
     let token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
    
-    try {
-        const msg = {
-            to: email,
-            from: "losmatabugs@gmail.com",
-            subject:"Recover Password",
-            text:"This email was requested to change your password, please do not share with anyone, if you have not requested it, you do not need to do anything",
-            html:`<a href=${CLIENT_URL}/updatepassword/?token=${token}>Restore your password</a>`
-        }
-        await sgMail.send(msg);
-    }
-    catch(error) {
-        console.log(error)
-    }
     return "We have sent an email to your mailbox so that you can update your password"
 }
 
