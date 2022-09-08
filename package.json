@@ -1,6 +1,7 @@
 {
   "name": "mata-bugs--desafio-tecnico",
   "version": "1.0.0",
+  "homepage": "home",
   "description": "",
   "main": "index.js",
   "type": "module",
