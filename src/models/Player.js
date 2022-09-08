@@ -42,7 +42,7 @@ const Player = sequelize.define(
     },
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: "https://drive.google.com/thumbnail?id=1FvgHhPmYNwruvKSjok1dp-ikpKVD2O5z"
+      defaultValue: "https://cdn-icons-png.flaticon.com/256/4392/4392506.png"
     },
     admin: {
       type: DataTypes.BOOLEAN,
