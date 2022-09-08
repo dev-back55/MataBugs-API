@@ -31,6 +31,7 @@ export async function signUp(nickname, email, avatar, password) {
   if (findPlayer.length !== 0) throw new Error('There is already a player with this email')
 
   let hpassword = hashSync(password, Number.parseInt(rounds))
+  if(avatar.length===0) avatar = null
   let playerCreated = await Player.create({nickname, email, avatar, password:hpassword, status:"bronce"})
   let token = jwt.sign({ player: playerCreated }, secret, {expiresIn: expires});
 
