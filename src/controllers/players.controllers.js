@@ -10,20 +10,6 @@ export async function getHallOfFame() {
   return betterPlayers;
 }
 
-export async function createPlayer(data) {
-  let { nickname, email, avatar, password, admin } = data;
-
-  const findInDb = await Player.findOne({ where: { email } })
-  if (findInDb) throw new Error ('There is already a player with this email')
-
-  let hpassword = hashSync(password, Number.parseInt(rounds));
-  if(avatar.length===0) avatar = avatareimg
-  await Player.create({ nickname, email, avatar, admin, password: hpassword, status: "bronce" });
-  
-  return `the player ${nickname} was created successfully`;
-
-}
-
 export async function updatePlayer(id,data) {
   let {idCard} = data
   let userById = await getPlayerById(id)

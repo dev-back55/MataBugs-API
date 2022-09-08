@@ -1,22 +1,9 @@
 import { Router } from "express";
-//import cors from "cors";
-import {getHallOfFame, searchPlayers, createPlayer, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
+import {getHallOfFame, searchPlayers, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
 import auth from '../middlewares/auth.js';
 
 
 const router = Router();
-/*
-var whitelist = ['http://localhost:3000']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-*/
 
 router.get("/hallOfFame", async (_, res) => {
   try {
@@ -35,14 +22,6 @@ router.get("/search", async (req, res) => {
   }
 });
 
-router.post("/createPlayer", auth, async (req, res) => {
-  try {
-    let data = req.body;
-    res.status(200).json(await createPlayer(data));
-  } catch (error) {
-    res.status(404).send(error.message);
-  }
-});
 
 router.put("/player", auth, async (req, res) => {
   try {
@@ -53,16 +32,6 @@ router.put("/player", auth, async (req, res) => {
     res.status(404).send(error.message);
   }
 });
-
-// router.put("/player/:id", auth, async (req, res) => {
-//   try {
-//     let data = req.body;
-//     let id = req.params
-//     res.status(200).json(await updatePlayer(id, data));
-//   } catch (error) {
-//     res.status(404).send(error.message);
-//   }
-// });
 
 router.delete("/player/:id", auth,async(req,res)=>{
   try {
