@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import {getHallOfFame, searchPlayers, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
 import auth from '../middlewares/auth.js';
 

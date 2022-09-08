@@ -80,7 +80,7 @@ export async function crearJugadores() {
   }
 }
 
-let cantidadDeUsuarios = 200;
+let cantidadDeUsuarios = 50;
 export async function crearJugadoresParaDb() {
   for (let j = 0; j < cantidadDeUsuarios; j++) {
       let ranking = asignarRanking()
@@ -92,7 +92,7 @@ export async function crearJugadoresParaDb() {
       let avatar = avatares[Math.floor(Math.random() * avatares.length)];
       await Player.create({ nickname ,ranking, status, avatar, email, password })
   }
-  console.log("sobreviví")
+  console.log("Termine con Exito la Carga de Usuarios")
 }
 
 crearJugadoresParaDb()

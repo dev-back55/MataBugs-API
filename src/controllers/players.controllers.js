@@ -2,15 +2,12 @@ import { Op } from "sequelize";
 import Player from "../models/Player.js"
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({
-    order: [["ranking", "desc"]], limit: 10, where: {admin: false}, attributes: { exclude: ['password', 'admin', 'isactive'] }
-  });
-
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10, where: {isactive: true, admin: false}, attributes: { exclude: ['password','admin','isactive'] }});
   return betterPlayers;
 }
 
-export async function updatePlayer(id, data) {
-  let { idCard } = data
+export async function updatePlayer(id,data) {
+  let {idCard} = data
   let userById = await getPlayerById(id)
 
   if (!userById.admin && id != idCard) throw new Error('you do not have the permissions to perform this action')
