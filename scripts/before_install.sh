@@ -18,6 +18,7 @@ echo 'run after_install.sh: ' >> /home/ec2-user/app/MataBugs-API/deploy.log
 
 #give permission for everything in the express-app directory
 sudo chmod -R 777 /home/ec2-user/app >> /home/ec2-user/app/MataBugs-API/deploy.log
+sudo chmod -R 777 /home/ec2-user/app/MataBugs-API
 
 echo 'cd /home/ec2-user/app/MataBugs-API' >> /home/ec2-user/app/MataBugs-API/deploy.log
 cd /home/ec2-user/app/MataBugs-API >> /home/ec2-user/app/MataBugs-API/deploy.log
@@ -25,4 +26,5 @@ cd /home/ec2-user/app/MataBugs-API >> /home/ec2-user/app/MataBugs-API/deploy.log
 echo 'npm install' >> /home/ec2-user/app/MataBugs-API/deploy.log 
 npm install >> /home/ec2-user/app/MataBugs-API/deploy.log
 echo 'copy example to env' >> /home/ec2-user/app/MataBugs-API/deploy.log
+sudo rm .env >> /home/ec2-user/app/MataBugs-API/deploy.log
 sudo cp .env.example .env >> /home/ec2-user/app/MataBugs-API/deploy.log
