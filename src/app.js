@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-//const { CLIENT_URL } = process.env;
+const { CLIENT_URL } = process.env;
 
 const app = express();
 //app.use(cors());
@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 
 // CORS CONFIGURATION
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', CLIENT_URL);
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
