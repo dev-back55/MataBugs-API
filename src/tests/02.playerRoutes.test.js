@@ -5,7 +5,7 @@ import app from '../app.js';
 import { createPlayer } from "../controllers/players.controllers.js";
 import Player from "../models/Player.js"
 
-describe('Routes:--`hallOfFame`--', function () {
+describe('Routes:--`hallOfFame`--`/search`', function () {
     it('GET inicialmente debe devolver un arreglo vacio', async function () {
         await sequelize.sync({ force: true })
         const response = await request(app)
@@ -60,6 +60,7 @@ describe('Routes:--`hallOfFame`--', function () {
         })
     })
     afterAll(async () => {
+        await sequelize.sync({ force: true })
         await sequelize.close();
     });
 })
