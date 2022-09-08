@@ -73,8 +73,8 @@ function setFilters(status, text) {
   let filters ={[Op.and]:[{admin:{[Op.eq]:false},isactive:{[Op.eq]:true}}]}
 
   let equalStatus = {[Op.eq]:status}
-  let includedInStatus = {[Op.like]:`%${text}%`}
-  let includedInNickname = {[Op.like]:`%${text}%`}
+  let includedInStatus = {[Op.iLike]:`%${text}%`}
+  let includedInNickname = {[Op.iLike]:`%${text}%`}
 
   if(status && text) filters[Op.and][0].status = equalStatus, filters[Op.and][0].nickname = includedInNickname
   else if(text) filters[Op.and][0][Op.or] = [{status:includedInStatus},{nickname:includedInNickname}]
