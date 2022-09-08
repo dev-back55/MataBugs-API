@@ -3,6 +3,7 @@ import Player from "../models/Player.js"
 import { hashSync } from 'bcrypt';
 import { rounds } from '../auth.js';
 
+const avatareimg = process.env(AVATAR)
 
 export async function getHallOfFame() {
   let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10, where: {isactive: true, admin: false}, attributes: { exclude: ['password','admin','isactive'] }});
@@ -16,7 +17,7 @@ export async function createPlayer(data) {
   if (findInDb) throw new Error ('There is already a player with this email')
 
   let hpassword = hashSync(password, Number.parseInt(rounds));
-  if(avatar.length===0) avatar = null
+  if(avatar.length===0) avatar = avatareimg
   await Player.create({ nickname, email, avatar, admin, password: hpassword, status: "bronce" });
   
   return `the player ${nickname} was created successfully`;

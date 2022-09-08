@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
+const avatareimg = proccess.env(AVATARE)
 const API_KEY = process.env.SENDGRID_API_KEY
 export const image = 'https://res.cloudinary.com/techmarket/image/upload/v1662155306/WhatsApp_Image_2022-09-01_at_08.20.50_ihe7np.jpg'
 
@@ -31,7 +32,7 @@ export async function signUp(nickname, email, avatar, password) {
   if (findPlayer.length !== 0) throw new Error('There is already a player with this email')
 
   let hpassword = hashSync(password, Number.parseInt(rounds))
-  if(avatar.length===0) avatar = null
+  if(avatar.length===0) avatar = avatareimg
   let playerCreated = await Player.create({nickname, email, avatar, password:hpassword, status:"bronce"})
   let token = jwt.sign({ player: playerCreated }, secret, {expiresIn: expires});
 
