@@ -16,6 +16,7 @@ export async function createPlayer(data) {
   if (findInDb) throw new Error ('There is already a player with this email')
 
   let hpassword = hashSync(password, Number.parseInt(rounds));
+  if(avatar.length===0) avatar = null
   await Player.create({ nickname, email, avatar, admin, password: hpassword, status: "bronce" });
   
   return `the player ${nickname} was created successfully`;
