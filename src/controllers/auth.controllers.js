@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-const avatareimg = proccess.env(AVATARE)
+const avatareimg = "https://cdn-icons-png.flaticon.com/256/4105/4105459.png"
 const API_KEY = process.env.SENDGRID_API_KEY
 export const image = 'https://res.cloudinary.com/techmarket/image/upload/v1662155306/WhatsApp_Image_2022-09-01_at_08.20.50_ihe7np.jpg'
 
