@@ -5,13 +5,13 @@ import app from '../app.js';
 import Player from '../models/Player.js';
 import jwt from 'jsonwebtoken';
 import { secret, expires } from '../auth.js';
-import { createPlayer } from "../controllers/players.controllers.js";
+import { createPlayer } from "./auxfunction.js";
 
 describe('Routes:--`password`--', function () {
     let token;
     //En este test generamos el token que nos llegaria por mail
     it('POST email, obtenemos un mensaje', async function () {
-        await createPlayer({ 'nickname': 'enzo', 'email': 'enzo@gmail.com', 'avatar': 'alguno por defecto', 'password': 'enzo123', 'admin': true })
+        await createPlayer('enzo', 'enzo@gmail.com', 'alguno por defecto', 'enzo123', true)
         let playerInDb = await Player.findOne({where:{email:'enzo@gmail.com'}})
         token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
         const response = await request(app)

@@ -5,7 +5,7 @@ import './models/Player.js'
 // for add github actions commit
 
 //setting
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3001;
 
 //Iniciamos Server
 async function main() {

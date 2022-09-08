@@ -5,6 +5,7 @@ const router = Router();
 router.post('/password', async(req,res)=>{
     try {
         let { email  } = req.body
+        console.log(email)
         res.json(await recoverPassword(email))
     } catch(error){
         res.status(400).json(error.message)

@@ -34,6 +34,7 @@ export async function signUp(nickname, email, avatar, password) {
   let playerCreated = await Player.create({nickname, email, avatar, password:hpassword, status:"bronce"})
   let token = jwt.sign({ player: playerCreated }, secret, {expiresIn: expires});
 
+  console.log(email)
   try{
     const msg = {
       to: email,
