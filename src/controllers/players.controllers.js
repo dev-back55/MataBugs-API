@@ -5,7 +5,7 @@ import { rounds } from '../auth.js';
 
 
 export async function getHallOfFame() {
-  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10, where: {isactive:false, admin: false}, attributes: { exclude: ['password','admin','isactive'] }});
+  let betterPlayers = await Player.findAll({ order: [["ranking", "desc"]], limit : 10, where: {isactive: true, admin: false}, attributes: { exclude: ['password','admin','isactive'] }});
   return betterPlayers;
 }
 
