@@ -10,9 +10,8 @@ describe('Routes:--`hallOfFame`--`/search`', function () {
         const response = await request(app)
             .get("/hallOfFame")
             .set('Accept', 'application/json')
-        expect('Content-Type', /json/) // podemos testear los headers
         expect(response.status).to.eql(200);
-        expect(response.body).to.eql([]) // testeamos la respuesta con el body
+        expect(response.body).to.eql([])
     })
     it('GET responde con un array con todos los usuarios', async function () {
         await Player.create({ nickname: 'enzo', email: 'enzo@gmail.com', avatar: 'alguno por defecto', password: 'enzo123', status: "bronce" })
@@ -20,7 +19,6 @@ describe('Routes:--`hallOfFame`--`/search`', function () {
         const response = await request(app)
             .get("/hallOfFame")
             .set('Accept', 'application/json')
-        expect('Content-Type', /json/) // podemos testear los headers
         expect(response.status).to.eql(200);
         expect(response.body).to.eql([
             {

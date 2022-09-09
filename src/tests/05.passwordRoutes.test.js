@@ -11,6 +11,7 @@ describe('Routes:--`password`--', function () {
     let token;
     //En este test generamos el token que nos llegaria por mail
     it('POST email, obtenemos un mensaje', async function () {
+        await sequelize.sync({ force: true })
         await createPlayer('enzo', 'enzo@gmail.com', 'alguno por defecto', 'enzo123', true)
         let playerInDb = await Player.findOne({where:{email:'enzo@gmail.com'}})
         token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
@@ -18,7 +19,7 @@ describe('Routes:--`password`--', function () {
             .post('/password')
             .send({ 'email': 'enzo@gmail.com'})
         expect(response.status).to.eql(200)
-        expect(response.body).to.eql("We have sent an email to your mailbox so that you can update your password")
+        expect(response.body.msg).to.eql("We have sent an email to your mailbox so that you can update your password")
     })
     it('PUT se ingresa la nueva password y el token, se obtiene un mensaje', async function () {
         const response = await request(app)
@@ -37,8 +38,8 @@ describe('Routes:--`password`--', function () {
     it('PUT se envia el id de player (por params), su password y la password nueva, recive un mensaje de confirmacion. Cambia el password propio', async function(){
         const response = await request(app)
             .put('/password/1')
+            .set('Authorization', 'Bearer ' + token)
             .send({ 'oldPassword': 'enzoSanchez', 'newPassword':'SanchezEnzo123'})
-        expect(response.status).to.eql(200)
         expect(response.body).to.eql("password updated")
     })
     afterAll(async () => {

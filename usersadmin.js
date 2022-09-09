@@ -1,6 +1,4 @@
 import Player from "./src/models/Player.js";
-// import { faker } from "@faker-js/faker";
-// import multiavatar from "@multiavatar/multiavatar/esm";
 import { rounds } from "./src/auth.js";
 import { hashSync } from "bcrypt";
 

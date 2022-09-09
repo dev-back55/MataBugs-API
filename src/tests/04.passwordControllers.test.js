@@ -14,7 +14,7 @@ describe('-`recoverPassword`-`updatePassword`', function () {
         const newPassword = await recoverPassword('enzo@gmail.com')
         let playerInDb = await Player.findOne({where:{email:'enzo@gmail.com'}})
         token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
-        expect(newPassword).to.eql("We have sent an email to your mailbox so that you can update your password")
+        expect(newPassword.msg).to.eql("We have sent an email to your mailbox so that you can update your password")
     })
     it('La funcion updatePassword recibe una password nueva y el token, y devuelve un mensaje de confirmacion', async function () {
         const newPassword = await updatePassword('nuevaPassword',token)

@@ -5,14 +5,12 @@ import authRoutes from './routes/auth.routes.js';
 import passwordRoutes from './routes/password.routes.js'
 import morgan from 'morgan';
 import dotenv from "dotenv";
-//import cors from "cors";
 
 dotenv.config()
 
 const { CLIENT_URL } = process.env;
 
 const app = express();
-//app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 

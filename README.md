@@ -54,9 +54,6 @@ DB_DIALECT=postgres
 PORT=3000
 CLIENT_URL=http://15.229.74.105:3000
 
-** Auth Config: **
-SENDGRID_API_KEY=**********
-
 ```
 
 You have to replace `DB_USER` and `DB_PASSWORD` with your own credentials to connect to postgres database. This file will be ignored by github, as it contains sensitive information (the credentials).
