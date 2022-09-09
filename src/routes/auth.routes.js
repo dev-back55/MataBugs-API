@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 // Controllers
-import { signIn, signUp } from '../controllers/auth.controllers.js';
+import { signIn, signUp, refreshPlayer } from '../controllers/auth.controllers.js';
 import auth from '../middlewares/auth.js';
 
 router.post('/login', async(req,res)=>{
@@ -25,8 +25,8 @@ router.post('/signup',async (req,res)=>{
 router.post('/reload', auth, async (req,res) =>{
     try {
         let { id } = req.body;
-        if (req.player && req.player.id === id) res.json(req.player);
-        else throw new Error("INVALID USER ID");
+        let player = refreshPlayer(id, req.player);
+        res.json(player);
     } catch (error) {
         res.status(500).json(error.message);
     }

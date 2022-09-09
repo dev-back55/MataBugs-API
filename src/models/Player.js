@@ -14,27 +14,27 @@ const Player = sequelize.define(
       allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,
-        unique: true,
-        validate: {
-            isEmail: {
-                msg: "The email must be a valid email"
-            }
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        isEmail: {
+          msg: "The email must be a valid email"
         }
+      }
     },
     password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: {
-                args: [6, 255],
-                msg: "The password must have at least 6 characters"
-            }
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [6, 255],
+          msg: "The password must have at least 6 characters"
         }
+      }
     },
     status: {
-      type:DataTypes.STRING,
-      dafaultValue:'bronce',
+      type: DataTypes.STRING,
+      dafaultValue: 'bronce',
     },
     ranking: {
       type: DataTypes.INTEGER,
@@ -42,15 +42,15 @@ const Player = sequelize.define(
     },
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: "https://drive.google.com/thumbnail?id=1FvgHhPmYNwruvKSjok1dp-ikpKVD2O5z"
+      defaultValue: "https://cdn-icons-png.flaticon.com/256/4392/4392506.png"
     },
     admin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     isactive: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   { timestamps: false }

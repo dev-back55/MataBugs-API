@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { recoverPassword, updatePassword } from '../controllers/password.controllers.js';
+import { recoverPassword, updatePassword, changePassword } from '../controllers/password.controllers.js';
+import auth from '../middlewares/auth.js';
 const router = Router();
 
 router.post('/password', async(req,res)=>{
@@ -17,6 +18,16 @@ router.put('/password', async(req,res)=>{
         res.json(await updatePassword(password, token))
     } catch(error){
         res.status(400).json(error.message)
+    }
+})
+
+router.put('/password/:id', auth, async(req,res)=>{
+    try {
+        let { oldPassword, newPassword } = req.body;
+        let { id } = req.params;
+        res.json(await changePassword(id, oldPassword, newPassword));
+    } catch(error){
+        res.status(401).json({ message : error.message })
     }
 })
 

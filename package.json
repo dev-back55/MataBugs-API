@@ -1,6 +1,7 @@
 {
   "name": "mata-bugs--desafio-tecnico",
   "version": "1.0.0",
+  "homepage": "home",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -14,7 +15,6 @@
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
     "@multiavatar/multiavatar": "^1.0.7",
-    "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "chai": "^4.3.6",

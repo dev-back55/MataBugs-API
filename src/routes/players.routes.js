@@ -1,6 +1,5 @@
 import { Router } from "express";
-
-import {getHallOfFame, searchPlayers, createPlayer, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
+import {getHallOfFame, searchPlayers, updatePlayer, deletePlayerById } from '../controllers/players.controllers.js';
 import auth from '../middlewares/auth.js';
 
 
@@ -18,15 +17,6 @@ router.get("/search", async (req, res) => {
   try {
     let data = req.query;
     res.status(200).json(await searchPlayers(data));
-  } catch (error) {
-    res.status(404).send(error.message);
-  }
-});
-
-router.post("/createPlayer", auth, async (req, res) => {
-  try {
-    let data = req.body;
-    res.status(200).json(await createPlayer(data));
   } catch (error) {
     res.status(404).send(error.message);
   }
