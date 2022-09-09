@@ -12,7 +12,7 @@ export async function recoverPassword(email){
 
     let token = jwt.sign({ player: playerInDb }, secret, {expiresIn: expires});
    
-    return "We have sent an email to your mailbox so that you can update your password"
+    return {msg:"We have sent an email to your mailbox so that you can update your password", token:token}
 }
 
 export async function updatePassword(password, token){

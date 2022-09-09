@@ -15,22 +15,18 @@ router.post('/password', async(req,res)=>{
 router.put('/password', async(req,res)=>{
     try {
         let { password, token } = req.body
-
         res.json(await updatePassword(password, token))
     } catch(error){
-
         res.status(400).json(error.message)
     }
 })
 
-// RUTA PARA CAMBIAR EL PASSWORD PROPIO, NO EL RECUPERADO.
 router.put('/password/:id', auth, async(req,res)=>{
     try {
         let { oldPassword, newPassword } = req.body;
         let { id } = req.params;
         res.json(await changePassword(id, oldPassword, newPassword));
     } catch(error){
-        console.log(error.message);
         res.status(401).json({ message : error.message })
     }
 })
