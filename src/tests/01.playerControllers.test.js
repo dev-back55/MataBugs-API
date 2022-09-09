@@ -1,10 +1,11 @@
 import { expect } from 'chai';
 import { signUp } from '../controllers/auth.controllers.js';
 import { sequelize } from '../database/db.js';
-import { createPlayer, deletePlayerById, getHallOfFame, getPlayerById, searchPlayers, updatePlayer } from './../controllers/players.controllers.js';
+import { deletePlayerById, getHallOfFame, getPlayerById, searchPlayers, updatePlayer } from './../controllers/players.controllers.js';
 import Player from "../models/Player.js"
 
-describe('-`signUp`-`getHallOfFame`-`getPlayerById`-`deletePlayerById`-`createPlayer`-`updatePlayer`', function () {
+
+describe('-`signUp`-`getHallOfFame`-`getPlayerById`-`deletePlayerById`--`updatePlayer`', function () {
     beforeEach(async function () {
         await sequelize.sync({ force: true })
     })
@@ -24,15 +25,15 @@ describe('-`signUp`-`getHallOfFame`-`getPlayerById`-`deletePlayerById`-`createPl
         expect(deletePlayer).to.eql(`The player was eliminated`)
     })
     it('Crea jugadores y los edita', async function () {
-        await createPlayer({ nickname: 'enzo', email: 'enzo@gmail.com', avatar: 'a.jpg', password: 'enzo123' })
+        await Player.create({ nickname: 'enzo', email: 'enzo@gmail.com', avatar: 'a.jpg', password: 'enzo123' })
         const nicknameUpdate = await updatePlayer(1, { nickname: 'enzosanchez', idCard: 1 })
         const player1 = await getPlayerById(1)
         expect(nicknameUpdate).to.eql('your profile has been successfully updated')
         expect(player1.nickname).to.eql('enzosanchez')
     })
     it('Crea jugadores, el primero Admin, este modifica a otro jugador y lo banea', async function () {
-        await createPlayer({ nickname: 'fede', email: 'fede@gmail.com', avatar: 'a.jpg', password: 'fede123', admin: true })
-        await createPlayer({ nickname: 'lucas', email: 'lucas@gmail.com', avatar: 'a.jpg', password: 'lucas123' })
+        await Player.create({ nickname: 'fede', email: 'fede@gmail.com', avatar: 'a.jpg', password: 'fede123', admin: true })
+        await Player.create({ nickname: 'lucas', email: 'lucas@gmail.com', avatar: 'a.jpg', password: 'lucas123', status: "bronce" })
         const adminUpdatePlayer2 = await updatePlayer(1, { nickname: 'lucasB', avatar: 'b.jpg', isactive: false, idCard: 2 })
         expect(adminUpdatePlayer2).to.eql(`The player 2 has been updated`)
         const player2 = await getPlayerById(2)

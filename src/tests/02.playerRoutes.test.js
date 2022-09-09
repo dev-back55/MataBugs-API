@@ -2,7 +2,6 @@ import request from "supertest";
 import { expect } from 'chai';
 import { sequelize } from '../database/db.js';
 import app from '../app.js';
-import { createPlayer } from "../controllers/players.controllers.js";
 import Player from "../models/Player.js"
 
 describe('Routes:--`hallOfFame`--`/search`', function () {
@@ -11,17 +10,15 @@ describe('Routes:--`hallOfFame`--`/search`', function () {
         const response = await request(app)
             .get("/hallOfFame")
             .set('Accept', 'application/json')
-        expect('Content-Type', /json/) // podemos testear los headers
         expect(response.status).to.eql(200);
-        expect(response.body).to.eql([]) // testeamos la respuesta con el body
+        expect(response.body).to.eql([])
     })
     it('GET responde con un array con todos los usuarios', async function () {
-        await createPlayer({ nickname: 'enzo', email: 'enzo@gmail.com', avatar: 'alguno por defecto', password: 'enzo123' })
-        await createPlayer({ nickname: 'lucas', email: 'lucas@gmail.com', avatar: 'alguno por defecto', password: 'lucas123' })
+        await Player.create({ nickname: 'enzo', email: 'enzo@gmail.com', avatar: 'alguno por defecto', password: 'enzo123', status: "bronce" })
+        await Player.create({ nickname: 'lucas', email: 'lucas@gmail.com', avatar: 'alguno por defecto', password: 'lucas123', status: "bronce" })
         const response = await request(app)
             .get("/hallOfFame")
             .set('Accept', 'application/json')
-        expect('Content-Type', /json/) // podemos testear los headers
         expect(response.status).to.eql(200);
         expect(response.body).to.eql([
             {

@@ -2,14 +2,14 @@ import request from "supertest";
 import { expect } from 'chai';
 import { sequelize } from '../database/db.js';
 import app from '../app.js';
-import { createPlayer } from "../controllers/players.controllers.js";
+import {createPlayer} from "./auxfunction.js";
 
-describe('Routes:--`signup`--`createPlayer`--`login`--`player`--', function () {
+describe('Routes:--`signup`--`login`--`player`--', function () {
     let token;
     //En este test estamos Hardcodeando un admin en la DB...
     it('POST login admin, obtenemos el token', async function () {
         await sequelize.sync({ force: true })
-        await createPlayer({ 'nickname': 'enzo', 'email': 'enzo@gmail.com', 'avatar': 'alguno por defecto', 'password': 'enzo123', 'admin': 'true' })
+        await createPlayer('enzo', 'enzo@gmail.com', 'alguno por defecto', 'enzo123', 'true')
         const response = await request(app)
             .post('/login')
             .send({ 'email': 'enzo@gmail.com', 'password': 'enzo123'})
@@ -17,14 +17,14 @@ describe('Routes:--`signup`--`createPlayer`--`login`--`player`--', function () {
         return token = response.body.token
     })
     it('POST admin agrega un nuevo player, responde con un mensaje de confirmación y su status correspondiente', async function () {
-        await createPlayer({'nickname': 'horacio', 'email': 'horacio@gmail.com', 'avatar': 'alguno por defecto', 'password': 'hora123' })
-        await createPlayer({'nickname':'lucas', 'email':'lucas@gmail.com', 'avatar':'alguno por defecto', 'password':'lucas123'})
+        await createPlayer('horacio', 'horacio@gmail.com', 'alguno por defecto', 'hora123')
+        await createPlayer('lucas', 'lucas@gmail.com', 'alguno por defecto', 'lucas123')
         const response = await request(app)
-            .post('/createPlayer')
+            .post('/signup')
             .set('Authorization', 'Bearer ' + token)
             .send({ 'nickname': 'fede', 'email': 'fede@gmail.com', 'avatar': 'alguno por defecto', 'password': 'fede123' })
         expect(response.status).to.eql(200);
-        expect(response.body).to.eql(`the player fede was created successfully`)
+        expect(response.body.msg).to.eql(`player create successfully`)
     })
     it('DELETE admin elimina a horacio(id:2), responde con un mensaje de confirmación y su status correspondiente', async function () {
         const response = await request(app)

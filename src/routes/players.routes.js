@@ -22,7 +22,6 @@ router.get("/search", async (req, res) => {
   }
 });
 
-
 router.put("/player", auth, async (req, res) => {
   try {
     let data = req.body;
