@@ -17,11 +17,14 @@ Bugs Hunters is an App where you can access to see all the players, see the rank
 ## Stack of Technologies
 
 ### Front End:
-- HTML, CSS, Javascript, React, Redux, SendGrid, Cloudinary, SASS 
+- HTML, CSS, Javascript, React, Redux, Cloudinary, SASS
+- Test: Cypress
 - Deploy: AWS(EC2 - ngnix)
+- Responsive Design
 
 ### Back End:
-- Node.js, Express, Sequelize, Passport
+- Node.js, Express, Sequelize, JWT
+- Test: Jest
 - Deploy: AWS(EC2 - RDS) - PM2
 
 ### Database:
@@ -54,6 +57,7 @@ DB_DIALECT=postgres
 PORT=3000
 CLIENT_URL=http://15.229.74.105:3000
 
+
 ```
 
 You have to replace `DB_USER` and `DB_PASSWORD` with your own credentials to connect to postgres database. This file will be ignored by github, as it contains sensitive information (the credentials).
@@ -75,8 +79,7 @@ In Auth Config you must generated your own SendGrid credential to use this funct
 
 - Open the project console
     + Inside `MataBugs-api` folder, run the command line, `npm start`
-    + Inside `MataBugs-api` folder, run the command line, `node dataBaseTemporal.js` to create standard users with theirs avatars in local environments.
-        
+    + Inside `MataBugs-api` folder, run the command line, `node dataBaseTemporal.js` to create standard users with theirs avatars in local environments   
     + Inside `MataBugs-client` folder, run the command line, `npm start` and then (go to http://localhost:3000/).
 
 # For testing
